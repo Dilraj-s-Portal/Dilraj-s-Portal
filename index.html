@@ -358,7 +358,7 @@
       .nav-links a { padding: 14px 24px; font-size: 1rem; }
       .hamburger { display: flex; }
       .what-i-do { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { width: 100%; }
       .hero h1 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
     }
     @media (max-width: 480px) {
@@ -366,6 +366,63 @@
       .btn { padding: 12px 24px; font-size: 0.85rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
     }
+  </style>
+
+  <!-- GOAL BAR STYLES -->
+  <style>
+    .goal-section { padding: 40px 0 60px; }
+    .goal-box {
+      max-width: 700px; margin: 0 auto;
+      padding: 36px 40px;
+      text-align: center;
+    }
+    .goal-box h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      color: #f0f0ff;
+      margin-bottom: 6px;
+    }
+    .goal-box h3 span { color: #00d4ff; }
+    .goal-sub {
+      font-size: 0.85rem;
+      color: #707090;
+      margin-bottom: 24px;
+    }
+    .goal-track {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .goal-bar-wrap {
+      flex: 1;
+      height: 22px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50px;
+      border: 1px solid rgba(0,212,255,0.1);
+      overflow: hidden;
+      position: relative;
+    }
+    .goal-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+      border-radius: 50px;
+      transition: width 0.8s ease;
+      box-shadow: 0 0 20px rgba(0,212,255,0.2);
+    }
+    .goal-count {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: #00d4ff;
+      white-space: nowrap;
+      min-width: 70px;
+      text-align: right;
+    }
+    .goal-label {
+      font-size: 0.8rem;
+      color: #505070;
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+    }
+    .goal-label strong { color: #a855f7; }
   </style>
 </head>
 <body>
@@ -377,6 +434,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#hero" onclick="closeMenu()">Home</a></li>
         <li><a href="#about" onclick="closeMenu()">About</a></li>
+        <li><a href="#goal" onclick="closeMenu()">Goal</a></li>
         <li><a href="#projects" onclick="closeMenu()">Work</a></li>
         <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
       </ul>
@@ -487,6 +545,23 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOAL BAR -->
+  <section class="goal-section" id="goal">
+    <div class="container">
+      <div class="goal-box glass reveal">
+        <h3>🎯 Mission <span>330</span></h3>
+        <p class="goal-sub">Websites built for local businesses</p>
+        <div class="goal-track">
+          <div class="goal-bar-wrap">
+            <div class="goal-bar-fill" id="goalFill" style="width:0%;"></div>
+          </div>
+          <span class="goal-count" id="goalCount">0/330</span>
+        </div>
+        <p class="goal-label" id="goalLabel">Press of 330 websites complete</p>
       </div>
     </div>
   </section>
@@ -728,6 +803,19 @@
       btn.disabled = false;
       btn.textContent = 'Send Message →';
     });
+
+    // GOAL BAR — change this number as you build more sites
+    const sitesBuilt = 1;
+    const goalTotal = 330;
+    const pct = Math.min((sitesBuilt / goalTotal) * 100, 100);
+    document.getElementById('goalFill').style.width = pct + '%';
+    document.getElementById('goalCount').textContent = sitesBuilt + '/' + goalTotal;
+    const label = document.getElementById('goalLabel');
+    if (sitesBuilt < goalTotal) {
+      label.textContent = 'Every site gets me closer to the goal — currently ' + sitesBuilt + ' done, ' + (goalTotal - sitesBuilt) + ' to go';
+    } else {
+      label.textContent = '🎉 Goal reached! ' + goalTotal + ' websites built!';
+    }
   </script>
 </body>
 </html>
